@@ -12,7 +12,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/leaderboard", (req, res) => {
-  res.send("FPO: Not yet implemented");
+  const leaderboard = options.sort((a, z) => z.rank - a.rank);
+  res.json(leaderboard);
 });
 
 // Return two options to pick a winner
