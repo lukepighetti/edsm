@@ -3,6 +3,9 @@ const app = express();
 const port = 3000;
 
 const options = require("./content");
+const { elo } = require("./elo");
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("OK");
@@ -33,7 +36,45 @@ app.get("/duel", (req, res) => {
 
 // Vote on a winner of a duel
 app.post("/duel", (req, res) => {
-  res.send("FPO");
+  const { optionAId, optionBId, winnerId } = req.body;
+
+  if (!optionAId || !optionBId || !winnerId) {
+    res.statusCode = 400;
+    res.send("We need an optionAId and and optionBId");
+  }
+
+  if (optionAId !== winnerId && optionBId != winnerId) {
+    res.statusCode = 400;
+    res.send("winnerId has to match optionAId or optionBId");
+  }
+
+  const optionAWon = optionAId === winnerId;
+  const optionA = options.find((e) => e.id == optionAId);
+  const optionB = options.find((e) => e.id == optionBId);
+  const optionARank = optionA.rank;
+  const optionBRank = optionB.rank;
+
+  const { newWinnerRank, newLoserRank } = elo({
+    winnerRank: optionAWon ? optionARank : optionBRank,
+    loserRank: optionAWon ? optionBRank : optionARank,
+  });
+
+  optionA.rank = optionAWon ? newWinnerRank : newLoserRank;
+  optionB.rank = optionAWon ? newLoserRank : newWinnerRank;
+
+  res.send({
+    debug: {
+      newWinnerRank,
+      newLoserRank,
+      optionARankDelta: optionA.rank - optionARank,
+      optionBRankDelta: optionB.rank - optionBRank,
+      optionARankBefore: optionARank,
+      optionBRankBefore: optionBRank,
+      optionARankAfter: optionA.rank,
+      optionBRankAfter: optionB.rank,
+      optionAWon,
+    },
+  });
 });
 
 app.listen(port, () => {
