@@ -1,27 +1,34 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./index.css";
+import DuelRoute from "./routes/DuelRoute";
+import HomeRoute from "./routes/HomeRoute";
+import LeaderboardRoute from "./routes/LeaderboardRoute";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <HomeRoute />,
   },
   {
     path: "/leaderboard",
-    element: <div>Leaderboard!</div>,
+    element: <LeaderboardRoute />,
   },
   {
     path: "/duel",
-    element: <div>Duel!</div>,
+    element: <DuelRoute />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
