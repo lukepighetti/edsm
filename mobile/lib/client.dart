@@ -11,6 +11,8 @@ class OptionDto {
   late final int id = _json['id'];
   late final int rank = _json['rank'];
   late final String name = _json['name'];
+
+  late final String pubUrl = 'https://pub.dev/packages/$name';
 }
 
 // type Leaderboard = Option[];

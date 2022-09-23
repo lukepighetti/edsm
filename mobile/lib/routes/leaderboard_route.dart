@@ -45,9 +45,7 @@ class _LeaderboardRouteState extends State<LeaderboardRoute> {
               for (final option in leaderboard.options)
                 ListTile(
                   onTap: () {
-                    launchUrlString(
-                      'https://pub.dev/packages/${option.name}',
-                    );
+                    launchUrlString(option.pubUrl);
                   },
                   leading: Chip(
                     label: Text(option.rank.toString()),
