@@ -17,6 +17,8 @@ class OptionDto {
 class LeaderboardDto {
   LeaderboardDto.fromJson(this._json);
 
+  LeaderboardDto.empty() : _json = [];
+
   final List<dynamic> _json;
 
   late final List<OptionDto> options =

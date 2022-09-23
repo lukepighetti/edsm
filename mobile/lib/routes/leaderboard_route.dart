@@ -1,5 +1,6 @@
+import 'package:binder/binder.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/client.dart';
+import 'package:mobile/state.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class LeaderboardRoute extends StatefulWidget {
@@ -22,25 +23,18 @@ class LeaderboardRoute extends StatefulWidget {
 class _LeaderboardRouteState extends State<LeaderboardRoute> {
   @override
   Widget build(BuildContext context) {
+    final leaderboard = context.watch(leaderboardRef);
+
     /// fetch the leaderboard data
     /// display it
-    /// refresh every 10 seconds OR on pull to refresh
+    /// refresh every 5 seconds
     return Scaffold(
       appBar: AppBar(
         title: const Text('Leaderboard'),
       ),
-      body: StreamBuilder(
-        stream: () async* {
-          /// Fetch immediately
-          yield await getLeaderboard();
-
-          /// Update every 5 seconds
-          await for (final _ in Stream.periodic(const Duration(seconds: 5))) {
-            yield await getLeaderboard();
-          }
-        }(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+      body: Builder(
+        builder: (context) {
+          if (leaderboard.options.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -48,7 +42,7 @@ class _LeaderboardRouteState extends State<LeaderboardRoute> {
 
           return ListView(
             children: [
-              for (final option in snapshot.data!.options)
+              for (final option in leaderboard.options)
                 ListTile(
                   onTap: () {
                     launchUrlString(
