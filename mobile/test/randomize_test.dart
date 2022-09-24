@@ -21,7 +21,7 @@ void main() {
       }
     });
 
-    test('elementAt(0) equals elementAt(0)', () {
+    test('elementAt(0) equals elementAt(0) across 1000 iterations', () {
       final iterator = randomize([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
       for (var i = 0; i < 1000; i++) {
