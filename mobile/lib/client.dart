@@ -65,3 +65,27 @@ Future<LeaderboardDto> getLeaderboard() async {
 
 //   return res.json();
 // }
+
+class DuelVoteDto {
+  DuelVoteDto({
+    required this.optionAId,
+    required this.optionBId,
+    required this.winnerId,
+  });
+
+  final int optionAId;
+  final int optionBId;
+  final int winnerId;
+
+  Map<String, dynamic> toJson() => {
+        'optionAId': optionAId,
+        'optionBId': optionBId,
+        'winnerId': winnerId,
+      };
+}
+
+Future<void> postDuel(DuelVoteDto payload) async {
+  final json = jsonEncode(payload.toJson());
+  await http.post(Uri.parse('$baseUrl/duel'),
+      body: json, headers: {"Content-Type": "application/json"});
+}

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:binder/binder.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/client.dart';
 import 'package:mobile/state.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
@@ -28,6 +29,9 @@ class DuelRoute extends StatefulWidget {
 
 class _DuelRouteState extends State<DuelRoute> {
   final controller = SwipableStackController();
+
+  SwipeDirection? previousDirection;
+  OptionDto? previousOption;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,37 @@ class _DuelRouteState extends State<DuelRoute> {
               detectableSwipeDirections: const {
                 SwipeDirection.left,
                 SwipeDirection.right,
+              },
+              onSwipeCompleted: (index, swipedDirection) {
+                final swipedOption = duelStack[index];
+                final isFirst = index == 0;
+
+                if (!isFirst) {
+                  /// if swiped draw, do nothing
+                  if (swipedDirection == previousDirection) return;
+                  if (previousOption == null) return;
+
+                  /// swipedOption won
+                  if (swipedDirection == SwipeDirection.right) {
+                    postDuel(DuelVoteDto(
+                      optionAId: swipedOption.id,
+                      optionBId: previousOption!.id,
+                      winnerId: swipedOption.id,
+                    ));
+                  }
+
+                  /// swipedOption lost
+                  else {
+                    postDuel(DuelVoteDto(
+                      optionAId: swipedOption.id,
+                      optionBId: previousOption!.id,
+                      winnerId: previousOption!.id,
+                    ));
+                  }
+                }
+
+                previousDirection = swipedDirection;
+                previousOption = swipedOption;
               },
               builder: (context, properties) {
                 final option = duelStack[properties.index];
