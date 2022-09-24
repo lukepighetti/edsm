@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/routes/duel_route.dart';
 import 'package:mobile/routes/leaderboard_route.dart';
 
 class HomeRoute extends StatefulWidget {
@@ -18,10 +19,16 @@ class _HomeRouteState extends State<HomeRoute> {
           children: [
             ElevatedButton(
               onPressed: () {
+                DuelRoute.show(context);
+              },
+              child: const Text('Start a duel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
                 LeaderboardRoute.show(context);
               },
               child: const Text('Leaderboard'),
-            )
+            ),
           ],
         ),
       ),

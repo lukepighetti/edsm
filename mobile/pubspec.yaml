@@ -12,7 +12,9 @@ dependencies:
 
   binder: any
   cupertino_icons: ^1.0.2
+  figma_squircle: any
   http: any
+  swipable_stack: ^2.0.0
   url_launcher: any
 
 dev_dependencies:
