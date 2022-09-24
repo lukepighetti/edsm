@@ -35,6 +35,10 @@ class _DuelRouteState extends State<DuelRoute> {
       body: SwipableStack(
         itemCount: 99,
         controller: controller,
+        detectableSwipeDirections: const {
+          SwipeDirection.left,
+          SwipeDirection.right,
+        },
         builder: (context, properties) {
           return Padding(
             padding: const EdgeInsets.all(25.0),
