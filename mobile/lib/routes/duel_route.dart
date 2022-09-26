@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/client.dart';
-import 'package:mobile/state.momentum.dart';
+import 'package:mobile/state.dart';
 import 'package:momentum/momentum.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 

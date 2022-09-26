@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/state.momentum.dart';
+import 'package:mobile/state.dart';
 import 'package:momentum/momentum.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 

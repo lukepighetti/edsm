@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  binder:
-    dependency: "direct main"
-    description:
-      name: binder
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   boolean_selector:
     dependency: transitive
     description:

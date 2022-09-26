@@ -1,24 +1,47 @@
 import 'dart:async';
 
-import 'package:binder/binder.dart';
 import 'package:mobile/client.dart';
 import 'package:mobile/randomize.dart';
+import 'package:momentum/momentum.dart';
 
-final leaderboardRef = StateRef(LeaderboardDto.empty());
-final duelStackRef = StateRef(const <OptionDto>[]);
+class AppModel extends MomentumModel<AppController> {
+  const AppModel(
+    super.controller, {
+    required this.leaderboard,
+    required this.duelStack,
+  });
 
-final appViewLogicRef = LogicRef(AppViewLogic.new);
+  final LeaderboardDto leaderboard;
 
-class AppViewLogic with Logic implements Loadable, Disposable {
-  AppViewLogic(this.scope);
+  final List<OptionDto> duelStack;
 
   @override
-  final Scope scope;
+  void update({
+    LeaderboardDto? leaderboard,
+    List<OptionDto>? duelStack,
+  }) {
+    AppModel(
+      controller,
+      leaderboard: leaderboard ?? this.leaderboard,
+      duelStack: duelStack ?? this.duelStack,
+    ).updateMomentum();
+  }
+}
 
+class AppController extends MomentumController<AppModel> {
   Timer? _timer;
 
   @override
-  Future<void> load() async {
+  AppModel init() {
+    return AppModel(
+      this,
+      leaderboard: LeaderboardDto.empty(),
+      duelStack: const [],
+    );
+  }
+
+  @override
+  Future<void> bootstrap() async {
     await fetchLeaderboard();
     fetchDuelStack();
 
@@ -27,17 +50,17 @@ class AppViewLogic with Logic implements Loadable, Disposable {
     });
   }
 
-  @override
+  /// UH OH 🚩
   void dispose() {
     _timer?.cancel();
   }
 
   Future<void> fetchLeaderboard() async {
-    write(leaderboardRef, await getLeaderboard());
+    model.update(leaderboard: await getLeaderboard());
   }
 
   void fetchDuelStack() async {
-    final seed = read(leaderboardRef).options;
-    write(duelStackRef, randomize(seed, length: 100).toList());
+    final seed = model.leaderboard.options;
+    model.update(duelStack: randomize(seed, length: 100).toList());
   }
 }
