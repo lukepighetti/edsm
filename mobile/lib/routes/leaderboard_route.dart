@@ -1,6 +1,6 @@
-import 'package:binder/binder.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/state.dart';
+import 'package:mobile/state.momentum.dart';
+import 'package:momentum/momentum.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class LeaderboardRoute extends StatefulWidget {
@@ -23,7 +23,7 @@ class LeaderboardRoute extends StatefulWidget {
 class _LeaderboardRouteState extends State<LeaderboardRoute> {
   @override
   Widget build(BuildContext context) {
-    final leaderboard = context.watch(leaderboardRef);
+    // final leaderboard = context.watch(leaderboardRef);
 
     /// fetch the leaderboard data
     /// display it
@@ -32,8 +32,11 @@ class _LeaderboardRouteState extends State<LeaderboardRoute> {
       appBar: AppBar(
         title: const Text('Leaderboard'),
       ),
-      body: Builder(
-        builder: (context) {
+      body: MomentumBuilder(
+        controllers: const [AppController],
+        builder: (context, snapshot) {
+          final leaderboard = snapshot<AppModel>().leaderboard;
+
           if (leaderboard.options.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(),
