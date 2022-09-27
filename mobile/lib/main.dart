@@ -2,8 +2,11 @@ import 'package:binder/binder.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/routes/home_route.dart';
 import 'package:mobile/state.dart';
+import 'package:mobile/state.getit.dart';
 
 void main() {
+  setup();
+
   runApp(const MyApp());
 }
 

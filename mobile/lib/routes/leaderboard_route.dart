@@ -1,16 +1,16 @@
-import 'package:binder/binder.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/state.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:mobile/state.getit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class LeaderboardRoute extends StatefulWidget {
-  const LeaderboardRoute._();
+class LeaderboardRoute extends StatefulWidget with GetItStatefulWidgetMixin {
+  LeaderboardRoute._();
 
   static Future<void> show(BuildContext context) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return const LeaderboardRoute._();
+          return LeaderboardRoute._();
         },
       ),
     );
@@ -20,10 +20,11 @@ class LeaderboardRoute extends StatefulWidget {
   State<LeaderboardRoute> createState() => _LeaderboardRouteState();
 }
 
-class _LeaderboardRouteState extends State<LeaderboardRoute> {
+class _LeaderboardRouteState extends State<LeaderboardRoute>
+    with GetItStateMixin {
   @override
   Widget build(BuildContext context) {
-    final leaderboard = context.watch(leaderboardRef);
+    final leaderboard = watchOnly((AppModel appModel) => appModel.leaderboard);
 
     /// fetch the leaderboard data
     /// display it

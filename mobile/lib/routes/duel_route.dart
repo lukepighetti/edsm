@@ -1,23 +1,23 @@
 import 'dart:math';
 
-import 'package:binder/binder.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:mobile/client.dart';
-import 'package:mobile/state.dart';
+import 'package:mobile/state.getit.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 const _kDebugBadges = false;
 const _kDebugNoneLeft = false;
 
-class DuelRoute extends StatefulWidget {
-  const DuelRoute._();
+class DuelRoute extends StatefulWidget with GetItStatefulWidgetMixin {
+  DuelRoute._();
 
   static Future<void> show(BuildContext context) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return const DuelRoute._();
+          return DuelRoute._();
         },
       ),
     );
@@ -27,7 +27,7 @@ class DuelRoute extends StatefulWidget {
   State<DuelRoute> createState() => _DuelRouteState();
 }
 
-class _DuelRouteState extends State<DuelRoute> {
+class _DuelRouteState extends State<DuelRoute> with GetItStateMixin {
   final controller = SwipableStackController();
 
   SwipeDirection? previousDirection;
@@ -35,7 +35,7 @@ class _DuelRouteState extends State<DuelRoute> {
 
   @override
   Widget build(BuildContext context) {
-    late final duelStack = context.watch(duelStackRef);
+    final duelStack = watchOnly((AppModel appModel) => appModel.duelStack);
 
     return Scaffold(
       appBar: AppBar(
