@@ -2,8 +2,7 @@ type Option = { id: number; rank: number; name: string };
 
 type Leaderboard = Option[];
 
-const baseUrl = "https://344c-184-61-121-131.ngrok.io";
-// const baseUrl = "http://localhost:3000";
+const baseUrl = "https://edsm.ngrok.io";
 
 export async function getLeaderboard(): Promise<Leaderboard> {
   const res = await fetch(`${baseUrl}/leaderboard`);

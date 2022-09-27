@@ -27,7 +27,7 @@ class LeaderboardDto {
       _json.map((e) => OptionDto.fromJson(e as Map<String, dynamic>)).toList();
 }
 
-const baseUrl = "https://ffaf23e57e5c.ngrok.io";
+const baseUrl = "https://edsm.ngrok.io";
 
 // export async function getLeaderboard(): Promise<Leaderboard> {
 //   const res = await fetch(`${baseUrl}/leaderboard`);
