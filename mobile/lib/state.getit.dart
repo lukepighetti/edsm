@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobile/client.dart';
@@ -10,15 +12,22 @@ void setup() {
 }
 
 class AppModel extends ChangeNotifier {
+  Timer? _timer;
+
   void initState() async {
     await fetchLeaderboard();
     fetchDuelStack();
+
+    _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+      fetchLeaderboard();
+    });
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   var _leaderboard = LeaderboardDto.empty();
   LeaderboardDto get leaderboard => _leaderboard;
@@ -27,13 +36,11 @@ class AppModel extends ChangeNotifier {
   List<OptionDto> get duelStack => _duelStack;
 
   Future<void> fetchLeaderboard() async {
-    print('AppModel.fetchLeaderboard');
     _leaderboard = await getLeaderboard();
     notifyListeners();
   }
 
   void fetchDuelStack() async {
-    print('AppModel.fetchDuelStack');
     final seed = leaderboard.options;
     _duelStack = randomize(seed, length: 100).toList();
     notifyListeners();
