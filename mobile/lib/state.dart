@@ -38,6 +38,6 @@ class AppViewLogic with Logic implements Loadable, Disposable {
 
   void fetchDuelStack() async {
     final seed = read(leaderboardRef).options;
-    write(duelStackRef, randomize(seed, length: 100).toList());
+    write(duelStackRef, randomize(seed, length: 1000).toList());
   }
 }
