@@ -4,8 +4,6 @@ import reactLogo from "./assets/react.svg";
 import "./HomeRoute.css";
 
 function HomeRoute() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="App">
       <div>

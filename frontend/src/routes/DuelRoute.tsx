@@ -6,7 +6,6 @@ import "./DuelRoute.css";
 import { getDuel, postDuel } from "../client";
 
 function DuelRoute() {
-  const [count, setCount] = useState(0);
   const query = useQuery(["leaderboard"], getDuel, {
     refetchOnWindowFocus: false,
   });
