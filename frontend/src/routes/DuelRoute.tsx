@@ -79,7 +79,7 @@ function DuelRoute() {
                 <td></td>
                 <td></td>
                 <td>
-                  <button onClick={() => query.refetch()}>Skip</button>
+                  <button onClick={() => query.refetch()}>Tie</button>
                 </td>
               </tr>
             </tbody>
