@@ -1,5 +1,3 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import { useQuery } from "@tanstack/react-query";
 
 import "./DuelRoute.css";
