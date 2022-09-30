@@ -5,7 +5,7 @@
 ///  - ensures no consecutive duplicates
 ///  - runs through all elements in seed before repeating chunk
 Iterable<T> randomize<T>(List<T> seed, {int length = 1000}) {
-  return _randomize(seed).take(length);
+  return _randomize(seed).take(length).toList();
 }
 
 Iterable<T> _randomize<T>(List<T> seed) sync* {

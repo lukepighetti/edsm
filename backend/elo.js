@@ -1,9 +1,6 @@
 // Calculate new elo ranks based on winner/loser existing ranks
 // https://en.wikipedia.org/wiki/Elo_rating_system#Theory
 function elo({ winnerRank, loserRank }) {
-  //   const newWinnerRank = 1 / (1 + 10 ** ((loserRank - winnerRank) / 400));
-  //   const newLoserRank = 1 / (1 + 10 ** ((winnerRank - loserRank) / 400));
-
   return {
     newWinnerRank: getNewRating(winnerRank, loserRank, 1.0).me,
     newLoserRank: getNewRating(winnerRank, loserRank, 1.0).them,
