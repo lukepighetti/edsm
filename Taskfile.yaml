@@ -15,14 +15,11 @@ tasks:
   flutter:tunnel: ngrok http --subdomain=edsm-flutter {{.FLUTTER_PORT}}
   serve: > 
     tmux new-session 'task backend:serve' \; 
+    split-window -h 'task backend:tunnel' \;
     split-window -h 'task vite:serve' \; 
+    split-window -h 'task vite:tunnel' \;
     split-window -h  \;
     send-keys 'task flutter:serve' Enter \;
-    select-pane -t 0 \;
-    split-window -v 'task backend:tunnel' \;
-    select-pane -t 2 \;
-    split-window -v 'task vite:tunnel' \;
-    select-pane -t 4 \;
-    split-window -v 'task flutter:tunnel' \;
-    select-pane -t 4 \;
+    split-window -h 'task flutter:tunnel' \;
     select-layout tiled \;
+    select-pane -t 4 \;
