@@ -5,22 +5,22 @@ const options = require("./content");
 const { elo } = require("./elo");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT ?? 3000;
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send("OK");
 });
 
-app.get("/leaderboard", (req, res) => {
+app.get("/leaderboard", (_, res) => {
   const leaderboard = options.sort((a, z) => z.rank - a.rank);
   res.json(leaderboard);
 });
 
 // Return two options to pick a winner
-app.get("/duel", (req, res) => {
+app.get("/duel", (_, res) => {
   const optionAIndex = Math.floor(Math.random() * options.length);
   let optionBIndex = null;
 

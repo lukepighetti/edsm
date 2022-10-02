@@ -1,0 +1,14 @@
+version: '3'
+
+vars:
+  BACKEND_PORT: 3000
+  VITE_PORT: 3001
+  FLUTTER_PORT: 3002
+
+tasks:
+  backend:serve: cd backend && PORT={{.BACKEND_PORT}} node index.js
+  backend:tunnel: ngrok http --subdomain=edsm {{.BACKEND_PORT}}
+  vite:serve: cd frontend && npx -y vite --port={{.VITE_PORT}}
+  vite:tunnel: ngrok http --subdomain=edsm-vite {{.VITE_PORT}}
+  flutter:serve: cd mobile && flutter build web && npx -y serve -l {{.FLUTTER_PORT}} build/web
+  flutter:tunnel: ngrok http --subdomain=edsm-flutter {{.FLUTTER_PORT}}
