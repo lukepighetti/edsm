@@ -18,7 +18,6 @@ tasks:
     split-window -h 'task vite:serve' \; 
     split-window -h  \;
     send-keys 'task flutter:serve' Enter \;
-    select-layout even-horizontal \;
     select-pane -t 0 \;
     split-window -v 'task backend:tunnel' \;
     select-pane -t 2 \;
@@ -26,3 +25,4 @@ tasks:
     select-pane -t 4 \;
     split-window -v 'task flutter:tunnel' \;
     select-pane -t 4 \;
+    select-layout tiled \;
